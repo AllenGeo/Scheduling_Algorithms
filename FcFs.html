@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+    <center><h2>FIRST COME FIRST SERVE</h2></center>
+    <br><br><br>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Come First Serve</title>
+    <script src="./script1.js" defer></script>
+</head>
+<body>
+    <center><form method="post" name="sample">
+        <div>
+        <h3>Enter the Arrival time and Burst time of the processes : </h3>
+        <br>
+        ARRIVAL TIME   :&ensp;<input type="number" name="at"placeholder="Ex : 1 2 3">&ensp;&ensp;&ensp;
+        BURST TIME :&ensp;<input type="number" name="bt" placeholder="Ex : 0 1 2 4">  <br><br>
+        <br><br>
+        <input class="button" type="button" name="add" value="Add Data" onclick="adddata();">      
+        <input class="button" type="reset"  value="Clear Data">
+        <br><br>
+</div>
+
+        <br><br>
+        <table id="tb1" class="table" border="1" >
+            <tr>
+                <th>PROCESS ID</th>
+                <th>ARRIVAL TIME</th>
+                <th>BURST TIME</th>
+            </tr>
+        </table>
+        </div>
+        <br><br>
+        <br>
+        
+        <input class="button1" type="button" value="Clear" onClick="location.href='FCFS.html'">
+        <input class="button2" type="button" name="submit" value="Submit" onClick="submitdata();">
+        <br><br>
+        <br><br>
+        <div>
+        <br>
+        <h2>OUTPUT</h2>
+        <table id="tb2" class="table1" border="1" >
+            <tr>
+                <th>PROCESS ID</th>
+                <th>ARRIVAL TIME</th>
+                <th>BURST TIME</th>
+                <th>COMPLETION TIME</th>
+                <th>TURN AROUND TIME </th>
+                <th>WAITING TIME </th>
+            </tr>
+        </table>
+        <br>
+        <div id="ganttChart"></div>
+        <script>
+            let burst_time = [];
+let arrival_time = [];
+let completion_time = [];
+let turnaround_time = [];
+let waiting_time = [];
+let id_num = 1;
+let pid = [];
+
+function adddata() {
+  let AT= parseInt(document.sample.at.value);
+  let BT= parseInt(document.sample.bt.value);
+  arrival_time.push(AT);
+  burst_time.push(BT);
+  pid.push(id_num+1);
+  let tr = document.createElement('tr');
+  let td0 = tr.appendChild(document.createElement('td'));
+  let td1 = tr.appendChild(document.createElement('td'));
+  let td2 = tr.appendChild(document.createElement('td'));
+  td0.innerHTML = id_num;
+  td1.innerHTML = AT;
+  td2.innerHTML = BT;
+  id_num++
+  document.getElementById("tb1").appendChild(tr);
+}
+
+
+let pid1 = [];
+let arrival_time1 = [];
+let burst_time1 = [];
+let completion_time1 = [];
+let turnaround_time1 = [];
+let waiting_time1 = [];
+
+function submitdata() {
+    let indices = arrival_time.map((_, index) => index);
+    indices.sort((a, b) => arrival_time[a] - arrival_time[b]);
+    arrival_time = indices.map(index => arrival_time[index]);
+    burst_time = indices.map(index => burst_time[index]);
+    pid = indices.map(index => pid[index]);
+
+    let current_time = 0;
+    let n = burst_time.length;
+    for (let i = 0; i < n; i++) {
+        if (current_time < arrival_time[i]) {
+            current_time = arrival_time[i];
+        }
+
+        completion_time[i] = current_time + burst_time[i];
+        turnaround_time[i] = completion_time[i] - arrival_time[i];
+        waiting_time[i] = turnaround_time[i] - burst_time[i];
+
+        current_time = completion_time[i];
+    }
+
+    for (let i = 0; i < n; i++) {
+        pid1.push(pid[i]);
+        arrival_time1.push(arrival_time[i]);
+        burst_time1.push(burst_time[i]);
+        completion_time1.push(completion_time[i]);
+        turnaround_time1.push(turnaround_time[i]);
+        waiting_time1.push(waiting_time[i]);
+    }
+
+    funCall();
+    drawGanttChart(completion_time1, pid1);
+}
+
+function funCall() {
+  let html = '';
+  let num_flows = burst_time1.length;
+  setTimeout(() => {
+    for (let i = 0; i < num_flows; i++) {
+      html += '<tr>';
+      html += '<td>' + pid1[i] + '</td>';
+      html += '<td>' + arrival_time1[i] + '</td>';
+      html += '<td>' + burst_time1[i] + '</td>';
+      html += '<td>' + completion_time1[i] + '</td>';
+      html += '<td>' + turnaround_time1[i] + '</td>';
+      html += '<td>' + waiting_time1[i] + '</td>';
+      html += '</tr>';
+    }
+    document.getElementById("tb2").innerHTML += html;
+  }, 1000);
+}
+
+function drawGanttChart(completion_times, pids) {
+  let html = '';
+  let num_processes = completion_times.length;
+  let start_time = 0;
+  let end_time = completion_times[num_processes - 1];
+
+  html += '<div class="gantt-chart">';
+  for (let i = 0; i < num_processes; i++) {
+    let width = (completion_times[i] - start_time) / (end_time - start_time) * 100;
+    html += '<div class="gantt-block" style="width:' + width + '%">';
+    html += '<span class="gantt-text">' + pids[i] + '</span>';
+    html += '</div>';
+    start_time = completion_times[i];
+  }
+  html += '</div>';
+
+  document.getElementById("gantt-chart").innerHTML += html;
+}
+
+        </script>
+        <hr>
+
+    </form></center>
+</body>
+</html>

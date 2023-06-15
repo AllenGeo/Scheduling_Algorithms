@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="wstyle.css">
+<head>
+    <center><h2>SHORTEST JOB FIRST</h2></center>
+    <br><br><br>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Shortest job first</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="./script2.js" defer></script>
+
+</head>
+<body>
+    <center><form method="post" name="sample">
+        <div>
+        <h3>Enter the Arrival time and Burst time of the processes : </h3>
+        <br>
+        ARRIVAL TIME   :&ensp;<input type="number" name="at"placeholder="Ex : 1 2 3" min="0" oninput="validity.valid||(value='');" >&ensp;&ensp;&ensp;
+        BURST TIME :&ensp;<input type="number" name="bt" placeholder="Ex : 0 1 2 4" min="0" oninput="validity.valid||(value='');" >  <br><br>
+        <br><br>
+        <input class="button" type="button" name="add" value="Add Data" onclick="adddata();">      
+        <input class="button" type="reset"  value="Clear Data">
+        <br><br>
+</div>
+
+        <br><br>
+        <table id="tb1" class="table" border="1" >
+            <tr>
+                <th>PROCESS ID</th>
+                <th>ARRIVAL TIME</th>
+                <th>BURST TIME</th>
+            </tr>
+        </table>
+        </div>
+        <br><br>
+        <br>
+        
+        <input class="button1" type="button" value="Clear" onClick="location.href='SJF.html'">
+        <input class="button2" type="button" name="submit" value="Submit" onClick="submitdata();">
+        <br><br>
+        <br><br>
+        <div>
+        <br><br>
+        <h2>OUTPUT</h2>
+        <table id="tb2" class="table1" border="1" >
+            <tr>
+                <th>PROCESS ID</th>
+                <th>ARRIVAL TIME</th>
+                <th>BURST TIME</th>
+                <th>TURN AROUND TIME </th>
+                <th>WAITING TIME </th>
+            </tr>
+        </table>
+        <br>
+        <p id="avgwait">Average Waiting Time : <p id="avgwait1"></p></h3> 
+        <p id="avgturn">Average Turnaround Time : <p id="avgturn1"></p></h3>
+        <hr>
+
+    </form></center>
+    <center>
+        <div id="chart_div"></div>
+    </center>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="wstyle.css">
+<head>
+    <br>
+    <center><h2>WEIGHTED ROUND ROBIN SCHEDULING</h2></center>
+    <br><br><br>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighted Round Robin</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    
+</head>
+<body>
+    <center><form method="post" name="sample">
+        <div>
+        <h3>Enter the Priority and Burst time of the processes : </h3>
+        <br>
+        Priority   :&ensp;<input type="number" name="data" placeholder="Ex : 1 2 3" min="0" oninput="validity.valid||(value='');">&ensp;&ensp;&ensp;
+        Burst Time :&ensp;<input type="number" name="weight" placeholder="Ex : 0 1 2 4" min="0" oninput="validity.valid||(value='');">  <br><br>
+        <br><br>
+        <input class="button" type="button" name="add" value="Add Data" onclick="adddata();">      
+        <input class="button" type="reset"  value="Clear Data">
+        <br><br>
+        <br>
+        Data limit :&ensp;<input type="number" name="timequantum" min="0" oninput="validity.valid||(value='');"> 
+        <br><br>
+</div>
+        <br><br><br>
+        <table id="tb1" class="table" border="1" >
+            <tr>
+                <th>Flow Id</th>
+                <th>Weight</th>
+                <th>Data</th>
+            </tr>
+        </table>
+        </div>
+        <br><br>
+        <br>
+        
+        <input class="button1" type="button" value="Clear" onClick="location.href='WRR.html'">
+        <input class="button2" type="button" name="submit" value="Submit" onClick="submitdata();">
+        <br><br>
+        <br><br>
+        <div>
+        <br><br>
+        <h2>OUTPUT</h2>
+        <br>
+        <table id="tb2" class="table1" border="1" >
+            <tr>
+                <th>Flow Id</th>
+                <th>Burst time</th>
+                <th>Priority</th>
+                <th>Time slice</th>
+                <th>Turn Around Time </th>
+            </tr>
+        </table>
+        <br>
+    </form></center>
+    <br>
+    <center><h2>GANTT CHART</h2></center>
+    <br>
+    <center>
+    <div id="chart_div"></div>
+    </center>
+</body>
+</html>
